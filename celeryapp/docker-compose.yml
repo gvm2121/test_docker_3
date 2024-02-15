@@ -1,0 +1,39 @@
+version: "3.9"
+services:
+  app:
+    build: .
+    volumes:
+      - static:/code/static
+      - .:/code
+    ports:
+      - "8000:8000"
+    command: python3 manage.py runserver 0.0.0.0:8000
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: always
+
+
+  db:
+    image: postgres:15
+    volumes:
+      - ../data:/var/lib/postgresql@15/data/
+    environment:
+      - POSTGRES_HOST_AUTH_METHOD=trust
+      - POSTGRES_DB=dj_ctl_comb
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL","pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+
+  
+
+volumes:
+  pg_data:
+  static:
+  .:
+
