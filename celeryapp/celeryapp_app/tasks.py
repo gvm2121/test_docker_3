@@ -7,4 +7,4 @@ app = Celery('celeryapp_app')
 
 @app.task(bind=True)
 def testeo(self):
-    print("*************************** IMPRIMIENDO EL CRON 30 sgs")
+    print("*************************** IMPRIMIENDO EL CRON 10 sgs")
